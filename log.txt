@@ -1,0 +1,9 @@
+Array
+(
+    [transactionId] => txn_6756b179abf8c
+    [cryptoSymbol] => DOGE
+    [amount] => 380
+    [walletAddress] => DJtmu73oXDpawNKXffVaUoZ7yeAaGviocu
+    [qrCode] => https://i.imgur.com/agoN1eT.jpeg
+    [userId] => 483235
+)
