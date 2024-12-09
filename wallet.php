@@ -137,7 +137,6 @@
 </div>
 <div id="cryptoContainer"></div> -->
 
-
 <div id="offlineBanner" style="display:none; color:red;">You are offline. Showing cached data.</div>
 <div id="cryptoContainer"></div>
 
@@ -146,8 +145,8 @@
     const cryptoDataFromServer = <?php echo json_encode($cryptoData); ?>;
 
     // Cache for the last successfully fetched data and prices
-    let lastPrices = {};
-    let lastFetchedData = {};
+    let lastPrices = JSON.parse(localStorage.getItem('lastPrices')) || {}; // Load from LocalStorage
+    let lastFetchedData = {}; // Cached fetched data
 
     // Static data for cryptocurrencies
     const staticCryptoData = [
@@ -169,48 +168,46 @@
 
     // Display crypto data
     function displayCryptoData(data) {
-    const container = document.getElementById('cryptoContainer');
-    container.innerHTML = ''; // Clear the container for fresh data
+        const container = document.getElementById('cryptoContainer');
+        container.innerHTML = ''; // Clear the container for fresh data
 
-    staticCryptoData.forEach(crypto => {
-        const priceData = data[crypto.id] || {};
-        const price = Number(priceData.usd || 0); // Current price from API
-        const previousPrice = Number(lastPrices[crypto.id] || price); // Use cached price or current if no cache exists
+        staticCryptoData.forEach(crypto => {
+            const priceData = data[crypto.id] || {};
+            const price = Number(priceData.usd || 0); // Current price from API
+            const previousPrice = Number(lastPrices[crypto.id] || price); // Use cached price or current if no cache exists
 
-        // Calculate percentage change (use previousPrice before updating lastPrices)
-        const change24h = previousPrice > 0 ? ((price - previousPrice) / previousPrice) * 100 : 0;
+            // Calculate percentage change (use previousPrice before updating lastPrices)
+            const change24h = previousPrice > 0 ? ((price - previousPrice) / previousPrice) * 100 : 0;
 
-        // Update the cache AFTER the calculation
-        lastPrices[crypto.id] = price;
+            // Update the cache AFTER the calculation
+            lastPrices[crypto.id] = price;
 
-        const cryptoAmount = price > 0 ? (crypto.amount / price).toFixed(4) : '0.0000';
+            const cryptoAmount = price > 0 ? (crypto.amount / price).toFixed(4) : '0.0000';
 
-        const row = document.createElement('div');
-        row.className = 'crypto-row';
-        row.innerHTML = `
-            <div class="crypto-left">
-                <img src="${crypto.icon}" alt="${crypto.symbol}" class="crypto-icon">
-                <div class="crypto-info">
-                    <div class="crypto-name">${crypto.symbol}</div>
-                    <div class="crypto-network">${crypto.network}</div>
+            const row = document.createElement('div');
+            row.className = 'crypto-row';
+            row.innerHTML = `
+                <div class="crypto-left">
+                    <img src="${crypto.icon}" alt="${crypto.symbol}" class="crypto-icon">
+                    <div class="crypto-info">
+                        <div class="crypto-name">${crypto.symbol}</div>
+                        <div class="crypto-network">${crypto.network}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="crypto-right">
-                <div class="crypto-amount">${cryptoAmount}</div>
-                <div class="crypto-price">$${price.toFixed(2)}</div>
-                <div class="crypto-change ${change24h >= 0 ? 'positive' : 'negative'}">
-                    ${change24h > 0 ? '+' : ''}${change24h.toFixed(2)}%
+                <div class="crypto-right">
+                    <div class="crypto-amount">${cryptoAmount}</div>
+                    <div class="crypto-price">$${price.toFixed(2)}</div>
+                    <div class="crypto-change ${change24h >= 0 ? 'positive' : 'negative'}">
+                        ${change24h > 0 ? '+' : ''}${change24h.toFixed(2)}%
+                    </div>
                 </div>
-            </div>
-        `;
-        container.appendChild(row);
-    });
+            `;
+            container.appendChild(row);
+        });
 
-
-    // Save the updated lastPrices to LocalStorage
-    localStorage.setItem('lastPrices', JSON.stringify(lastPrices));
-}
-
+        // Save the updated lastPrices to LocalStorage
+        localStorage.setItem('lastPrices', JSON.stringify(lastPrices));
+    }
 
     // Fetch crypto prices
     async function fetchCryptoPrices() {
@@ -265,10 +262,17 @@
         banner.style.display = 'none';
     }
 
+    // Ensure localStorage has initial data before using it
+    if (Object.keys(lastPrices).length === 0) {
+        // Set the first fetch as initial data if lastPrices is empty
+        fetchCryptoPrices();
+    }
+
     // Initial fetch and set interval for updates
     fetchCryptoPrices();
-    setInterval(fetchCryptoPrices, 60000); // Fetch every 1 minute
+    setInterval(fetchCryptoPrices, 60000); // Fetch every 1 minute to get live updates
 </script>
+
 
 
 </body>
