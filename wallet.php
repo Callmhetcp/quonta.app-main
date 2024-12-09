@@ -3,6 +3,8 @@
     
     this will be included dynamically as the users  wallet for any page that needs to have the users wallet
 -->
+
+
 <style>
         :root {
             --background: #0f172a;

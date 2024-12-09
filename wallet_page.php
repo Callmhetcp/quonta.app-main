@@ -1,17 +1,14 @@
+<!-- 
+    DYNAMIC USERS WALLET SESSION 
+    
+    this will be included dynamically as the users  wallet for any page that needs to have the users wallet
+-->
 <?php
 
-ini_set('session.cookie_lifetime', 0);
-ini_set('session.gc_maxlifetime', 0);
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
-
+    session_start();
+    
 $user_lname = $_SESSION['user_lastname'] ;
 $email = $_SESSION['user_email'] ;
-
 
 ?>
 
@@ -275,40 +272,7 @@ $email = $_SESSION['user_email'] ;
                       </div>
                   </div>
 
-                  <div class="action_cards">
-                      <div class="wrapper">
-                          <div class="card">
-                              <a href="dashboard.php">
-                                  <span><i class="material-icons">arrow_upward</i></span>
-                                  <span>Send</span>
-                              </a>
-                          </div>
-                          <div class="card">
-                              <a href="deposit.php">
-                                  <span><i class="material-icons">arrow_downward</i></span>
-                                  <span>Deposit</span>
-                              </a>
-                          </div>
-                          <div class="card">
-                              <a href="#">
-                                  <span><i class="material-icons">sell</i></span>
-                                  <span>Sell</span>
-                              </a>
-                          </div>
-                          <div class="card">
-                              <a href="swap.php">
-                                  <span><i class="material-icons">swap_calls</i></span>
-                                  <span>Swap</span>
-                              </a>
-                          </div>
-                          <div class="card">
-                              <a href="history.php">
-                                  <span><i class="material-icons">history</i></span>
-                                  <span>History</span>
-                              </a>
-                          </div>
-                      </div>
-                  </div>
+               
 
                   <div class="quick_actions_minimized">
                     <div class="wrapper">

@@ -89,7 +89,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="wallet_page.php">
                                         <i class="material-icons">account_balance_wallet</i>
                                         <span>Wallet</span>
                                     </a>
