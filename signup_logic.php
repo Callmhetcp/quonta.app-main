@@ -43,8 +43,8 @@ function signup()
             } while (mysqli_num_rows($check_id_result) > 0); // Repeat if the ID already exists
 
             // Insert details including the random unique user_id
-            $insert = "INSERT INTO users (user_id, firstname, lastname, email, nationality, state, dob, gender, password, phone) 
-                       VALUES ('$user_id', '$firstname', '$lastname', '$email', '$nationality', '$state', '$dob', '$gender', '$hashedPwd', '$phone')";
+            $insert = "INSERT INTO users (user_id, firstname, lastname, email, nationality, state, dob, gender, password, phone,role) 
+                       VALUES ('$user_id', '$firstname', '$lastname', '$email', '$nationality', '$state', '$dob', '$gender', '$hashedPwd', '$phone','user')";
 
             $sql = mysqli_query($conn, $insert);
 

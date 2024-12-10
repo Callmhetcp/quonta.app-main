@@ -6,9 +6,9 @@
 <?php
 
     session_start();
-    
-$user_lname = $_SESSION['user_lastname'] ;
-$email = $_SESSION['user_email'] ;
+        
+    $user_lname = $_SESSION['user_lastname'] ;
+    $email = $_SESSION['user_email'] ;
 
 ?>
 
@@ -238,24 +238,24 @@ $email = $_SESSION['user_email'] ;
                           <span id="amount" >$<?php echo number_format($balance, 2); ?></span>
 
                           <script>
-                            function scrambleText(element, originalText, steps, interval) {
-                              const characters = '0123456789$,.'; // Characters used for scrambling
-                              let scrambled = originalText.split('');
+                            // function scrambleText(element, originalText, steps, interval) {
+                            //   const characters = '0123456789$,.'; // Characters used for scrambling
+                            //   let scrambled = originalText.split('');
                               
-                              let step = 0;
-                              const scrambleInterval = setInterval(() => {
-                                step++;
-                                scrambled = scrambled.map((char, i) => 
-                                  Math.random() < 0.5 && step < steps ? characters.charAt(Math.floor(Math.random() * characters.length)) : originalText[i]
-                                );
-                                element.textContent = scrambled.join('');
+                            //   let step = 0;
+                            //   const scrambleInterval = setInterval(() => {
+                            //     step++;
+                            //     scrambled = scrambled.map((char, i) => 
+                            //       Math.random() < 0.5 && step < steps ? characters.charAt(Math.floor(Math.random() * characters.length)) : originalText[i]
+                            //     );
+                            //     element.textContent = scrambled.join('');
                         
-                                if (step >= steps) {
-                                  clearInterval(scrambleInterval);
-                                  element.textContent = originalText; // Restore original text
-                                }
-                              }, interval);
-                            }
+                            //     if (step >= steps) {
+                            //       clearInterval(scrambleInterval);
+                            //       element.textContent = originalText; // Restore original text
+                            //     }
+                            //   }, interval);
+                            // }
                         
                             const span = document.querySelector('#amount');
                             const originalText = '$<?php echo number_format($balance, 2); ?>';

@@ -138,19 +138,16 @@
     You are offline. Showing last updated data.
 </div>
 <div id="cryptoContainer"></div> -->
-
 <div id="offlineBanner" style="display:none; color:red;">You are offline. Showing cached data.</div>
 <div id="cryptoContainer"></div>
 
 <script>
-    // Pass the processed PHP data into JavaScript
+    // Pass PHP data into JavaScript
     const cryptoDataFromServer = <?php echo json_encode($cryptoData); ?>;
 
-    // Cache for the last successfully fetched data and prices
-    let lastPrices = JSON.parse(localStorage.getItem('lastPrices')) || {}; // Load from LocalStorage
-    let lastFetchedData = {}; // Cached fetched data
+    let lastPrices = JSON.parse(localStorage.getItem('lastPrices')) || {};
+    let lastFetchedData = {}; // Cache for fetched data
 
-    // Static data for cryptocurrencies
     const staticCryptoData = [
         { id: 'bitcoin', symbol: 'BTC', network: 'BTC', icon: 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png', amount: 0 },
         { id: 'tether', symbol: 'USDT', network: 'TRC20', icon: 'https://assets.coingecko.com/coins/images/325/small/Tether.png', amount: 0 },
@@ -164,25 +161,26 @@
 
     // Merge server-side data with static data
     staticCryptoData.forEach(crypto => {
-        const serverAmount = cryptoDataFromServer[crypto.symbol] || 0;
-        crypto.amount = serverAmount; // Update amount from server data
+        crypto.amount = cryptoDataFromServer[crypto.symbol] || 0;
     });
 
-    // Display crypto data
     function displayCryptoData(data) {
         const container = document.getElementById('cryptoContainer');
-        container.innerHTML = ''; // Clear the container for fresh data
+        container.innerHTML = ''; // Clear existing content
 
         staticCryptoData.forEach(crypto => {
             const priceData = data[crypto.id] || {};
-            const price = Number(priceData.usd || 0); // Current price from API
-            const previousPrice = Number(lastPrices[crypto.id] || price); // Use cached price or current if no cache exists
+            const price = Number(priceData.usd || 0);
+            const previousPrice = lastPrices[crypto.id] !== undefined ? Number(lastPrices[crypto.id]) : price;
 
-            // Calculate percentage change (use previousPrice before updating lastPrices)
-            const change24h = previousPrice > 0 ? ((price - previousPrice) / previousPrice) * 100 : 0;
+            let change24h = 0;
+            if (price > 0 && previousPrice > 0) {
+                change24h = ((price - previousPrice) / previousPrice) * 100;
+            }
 
-            // Update the cache AFTER the calculation
-            lastPrices[crypto.id] = price;
+            if (price > 0) {
+                lastPrices[crypto.id] = price; // Update lastPrices with valid price
+            }
 
             const cryptoAmount = price > 0 ? (crypto.amount / price).toFixed(4) : '0.0000';
 
@@ -207,16 +205,15 @@
             container.appendChild(row);
         });
 
-        // Save the updated lastPrices to LocalStorage
+        // Persist updated prices to localStorage
         localStorage.setItem('lastPrices', JSON.stringify(lastPrices));
     }
 
-    // Fetch crypto prices
     async function fetchCryptoPrices() {
         if (!navigator.onLine) {
-            console.warn('No internet connection. Using cached data.');
+            console.warn('No internet connection. Showing cached data.');
             showOfflineMessage();
-            displayCryptoData(lastFetchedData); // Show cached data
+            displayCryptoData(lastFetchedData);
             return;
         }
 
@@ -225,20 +222,16 @@
             const response = await fetchWithTimeout(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`, {}, 10000);
             const data = await response.json();
 
-            // Update lastFetchedData cache
-            lastFetchedData = data;
-
-            // Display updated data
+            lastFetchedData = data; // Cache the fetched data
             displayCryptoData(data);
             hideOfflineMessage();
         } catch (error) {
             console.error('Error fetching crypto prices:', error);
             console.warn('Using cached data.');
-            displayCryptoData(lastFetchedData); // Show cached data if an error occurs
+            displayCryptoData(lastFetchedData); // Fallback to cached data
         }
     }
 
-    // Fetch with a timeout
     async function fetchWithTimeout(url, options = {}, timeout = 10000) {
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), timeout);
@@ -252,29 +245,20 @@
         }
     }
 
-    // Show offline message
     function showOfflineMessage() {
         const banner = document.getElementById('offlineBanner');
         banner.style.display = 'block';
     }
 
-    // Hide offline message
     function hideOfflineMessage() {
         const banner = document.getElementById('offlineBanner');
         banner.style.display = 'none';
     }
 
-    // Ensure localStorage has initial data before using it
-    if (Object.keys(lastPrices).length === 0) {
-        // Set the first fetch as initial data if lastPrices is empty
-        fetchCryptoPrices();
-    }
-
-    // Initial fetch and set interval for updates
+    // Initial fetch and periodic updates
     fetchCryptoPrices();
-    setInterval(fetchCryptoPrices, 60000); // Fetch every 1 minute to get live updates
+    setInterval(fetchCryptoPrices, 60000); // Fetch every 1 minute
 </script>
-
 
 
 </body>

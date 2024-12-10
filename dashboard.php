@@ -148,7 +148,7 @@ $email = $_SESSION['user_email'] ;
           <div style="height:62px; background-color: #1e293b; overflow:hidden; box-sizing: border-box; border: 1px solid #282E3B; border-radius: 4px; text-align: right; line-height:14px; block-size:62px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #262B38;padding:1px;padding: 0px; margin: 0px; width: 100%;">
               <div style="height:40px; padding:0px; margin:0px; width: 100%;">
                   <iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&amp;theme=dark&amp;pref_coin_id=1505&amp;invert_hover=no" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe>
-                  <script>
+                  <!-- <script>
                       document.addEventListener('contextmenu', (event) => event.preventDefault());
                           document.onkeydown = function(e) {
                               // Disable F12, Ctrl+Shift+I (Inspector), Ctrl+Shift+J (Console), Ctrl+U (View Source)
@@ -159,7 +159,7 @@ $email = $_SESSION['user_email'] ;
                                   return false; // Prevent the event
                               }
                           };
-                  </script>
+                  </script> -->
               </div>
               <div style="color: #1e293b; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;">
                   <a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #626B7F; text-decoration:none; font-size:11px"></a>
@@ -199,7 +199,7 @@ $email = $_SESSION['user_email'] ;
                           </a>
                       </li>
                       <li>
-                          <a href="features.php">
+                          <a href="404.php">
                               <i class="material-icons">widgets</i>
                               <span>Features</span>
                           </a>
@@ -241,24 +241,24 @@ $email = $_SESSION['user_email'] ;
                           <span id="amount" >$<?php echo number_format($balance, 2); ?></span>
 
                           <script>
-                            function scrambleText(element, originalText, steps, interval) {
-                              const characters = '0123456789$,.'; // Characters used for scrambling
-                              let scrambled = originalText.split('');
+                            // function scrambleText(element, originalText, steps, interval) {
+                            //   const characters = '0123456789$,.'; // Characters used for scrambling
+                            //   let scrambled = originalText.split('');
                               
-                              let step = 0;
-                              const scrambleInterval = setInterval(() => {
-                                step++;
-                                scrambled = scrambled.map((char, i) => 
-                                  Math.random() < 0.5 && step < steps ? characters.charAt(Math.floor(Math.random() * characters.length)) : originalText[i]
-                                );
-                                element.textContent = scrambled.join('');
+                            //   let step = 0;
+                            //   const scrambleInterval = setInterval(() => {
+                            //     step++;
+                            //     scrambled = scrambled.map((char, i) => 
+                            //       Math.random() < 0.5 && step < steps ? characters.charAt(Math.floor(Math.random() * characters.length)) : originalText[i]
+                            //     );
+                            //     element.textContent = scrambled.join('');
                         
-                                if (step >= steps) {
-                                  clearInterval(scrambleInterval);
-                                  element.textContent = originalText; // Restore original text
-                                }
-                              }, interval);
-                            }
+                            //     if (step >= steps) {
+                            //       clearInterval(scrambleInterval);
+                            //       element.textContent = originalText; // Restore original text
+                            //     }
+                            //   }, interval);
+                            // }
                         
                             const span = document.querySelector('#amount');
                             const originalText = '$<?php echo number_format($balance, 2); ?>';
@@ -414,7 +414,7 @@ $email = $_SESSION['user_email'] ;
 
             <ul>
                 <li>
-                    <a href="features.php">
+                    <a href="404.php">
                         <i class="material-icons">widgets</i>
                         <span>Features</span>
                     </a>
