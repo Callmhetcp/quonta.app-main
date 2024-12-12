@@ -108,54 +108,53 @@ function displayTransactions()
             $lastname = htmlspecialchars($transaction['lastname']);
             ?>
            
-      <!-- Transaction Card -->
-      <div class="transaction-card" 
-             data-status="<?php echo $status; ?>" 
-             data-transaction-id="<?php echo $transactionId; ?>">
-            <div class="transaction-header">
-                <a href="#" class="hash"><?php echo $transactionId; ?></a>
-                <div class="amount"><?php echo $amount; ?></div>
-            </div>
-            <div class="transaction-details">
-                <div class="detail-row">
-                    <span class="label">Date:</span>
-                    <span class="value"><?php echo date('Y-m-d', strtotime($date)); ?></span>
+      
+            <!-- Transaction Card -->
+            <div class="transaction-card" data-status="<?php echo $status; ?>" data-transaction-id="<?php echo $transactionId; ?>">
+                <div class="transaction-header">
+                    <a href="#" class="hash"><?php echo $transactionId; ?></a>
+                    <div class="amount"><?php echo $amount; ?></div>
                 </div>
-                <div class="detail-row">
-                    <span class="label">Crypto:</span>
-                    <span class="value"><?php echo $crypto; ?></span>
-                </div>
-                <div class="detail-row">
-                    <span class="label">Wallet:</span>
-                    <span class="value"><?php echo $wallet; ?></span>
-                </div>
-                <div class="status-row">
-                    <div>
-                        <span class="status-badge" 
-                              style="background: #eab20817; color: var(--pending-color);">
-                            <?php echo ucfirst($status); ?>
-                        </span>
-                        <br>
-                        <span class="type-badge credit" 
-                              style="background-color: rgba(34, 197, 94, 0.1); color: var(--positive-color);">
-                            <?php echo $transactionType; ?>
-                        </span>
+                <div class="transaction-details">
+                    <div class="detail-row">
+                        <span class="label">Date:</span>
+                        <span class="value"><?php echo date('Y-m-d', strtotime($date)); ?></span>
                     </div>
-                    <div class="transaction-dropdown">
-                        <button class="dropdown-button"><i class="fa fa-sort-down"></i></button>
-                        <div class="transaction-dropdown-menu">
-                            <button type="button" class="popup_trigger dropdown-item"
-                                    data-transaction-id="<?php echo $transactionId; ?>"
-                                    data-status="<?php echo $status; ?>"
-                                    data-firstname="<?php echo $firstname; ?>"
-                                    data-lastname="<?php echo $lastname; ?>">Update</button>
+                    <div class="detail-row">
+                        <span class="label">Crypto:</span>
+                        <span class="value"><?php echo $crypto; ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Wallet:</span>
+                        <span class="value"><?php echo $wallet; ?></span>
+                    </div>
+                    <div class="status-row">
+                        <div>
+                            <span class="status-badge" style="background: #eab20817; color: var(--pending-color);">
+                                <?php echo ucfirst($status); ?>
+                            </span>
+                            <br>
+                            <span class="type-badge credit" style="background-color: rgba(34, 197, 94, 0.1); color: var(--positive-color);">
+                                <?php echo $transactionType; ?>
+                            </span>
+                        </div>
+                        <div class="transaction-dropdown">
+                            <button class="dropdown-button"><i class="fa fa-sort-down"></i></button>
+                            <div class="transaction-dropdown-menu">
+                                <button type="button" class="popup_trigger dropdown-item" data-transaction-id="<?php echo $transactionId; ?>" data-status="<?php echo $status; ?>" data-firstname="<?php echo $firstname; ?>" data-lastname="<?php echo $lastname; ?>">Update</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    <p>No transactions found.</p>
+<?php
+        }
+    } else {
+        echo "<p>No transactions found.</p>";
+    }
+}
+?>
 
 
 <!-- Confirm/Decline Popup -->
@@ -188,14 +187,6 @@ function displayTransactions()
     </div>
 </section>
 
-
-        <?php
-    }
-} else {
-    echo "<p>No transactions found.</p>";
-}
-}
-    ?>
 
 
 

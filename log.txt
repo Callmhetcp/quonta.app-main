@@ -1,9 +1,9 @@
 Array
 (
-    [transactionId] => txn_675ac9c2d2017
-    [cryptoSymbol] => USDT
+    [transactionId] => txn_675aeaaa83013
+    [cryptoSymbol] => LTC
     [amount] => 1000
-    [walletAddress] => TVQ6niiLUweyAEL6ZidMVBKkAi8UNKesRs
-    [qrCode] => https://i.imgur.com/9VeaIbb.jpeg
+    [walletAddress] => LTw9YJjKwQUDj9JHD4Mh6VDkyEUj19WKEK
+    [qrCode] => https://i.imgur.com/agoN1eT.jpeg
     [userId] => 795940
 )

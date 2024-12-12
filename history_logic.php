@@ -37,8 +37,8 @@ function displayHistory()
             $wallet = htmlspecialchars($transaction['wallet_address']);
             $userId = htmlspecialchars($transaction['user_id']);
 ?>
-            <!-- Transaction Card HTML -->
-            <div class="transaction-card">
+               <!-- Transaction Card HTML -->
+               <div class="transaction-card">
                 <div class="transaction-header">
                     <a href="#" class="hash"><?php echo $transactionId; ?></a>
                     <div class="amount"><?php echo $amount; ?></div>
@@ -58,11 +58,11 @@ function displayHistory()
                     </div>
                     <div class="detail-row">
                         <span class="label">Crypto:</span>
-                        <span class="value"><?php echo $crypto?></span>
+                        <span class="value"><?php echo $crypto; ?></span>
                     </div>
                     <div class="detail-row">
-                        <span class="label">wallet:</span>
-                        <span class="value"><?php echo $wallet?></span>
+                        <span class="label">Wallet:</span>
+                        <span class="value"><?php echo $wallet; ?></span>
                     </div>
                     <div class="status-row">
                         <div>
@@ -88,6 +88,7 @@ function displayHistory()
 <?php
         }
     } else {
+        // Only display "No transactions found" if the result set is empty
         echo "<p>No transactions found.</p>";
     }
 }
